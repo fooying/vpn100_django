@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block js %}
+<script language="JavaScript" type="text/javascript">
+      function up(e){
+      if(document.getElementById('password').value=="" )
+	  {
+      document.getElementById('error').style.display='block';
+	  return false;
+       }
+      }
+
+</script>
+{% endblock %}
+{% block content %}
+<div style='position:absolute;left:50%;top:50%;margin:-150px 0 0 -200px;width:400px;height:200px;'>
+	<div style="display:none;" id='error'class="alert alert-error">对不起,请填写完整！</div>
+	<div class="alert alert-info"><b>修改密码</b> </div>
+
+	<form name="myform" id="myform" class="form-inline" action='.' method="POST" onSubmit="return up(this);">
+	   {% csrf_token %} 
+		<table class="table table-condensed">
+		<!--thead>
+		<tr>
+		<th>…</th>
+		<th>…</th>
+		</tr>
+		</thead-->
+		<tbody>
+		<tr>
+			<td><label for="password">新密码: </label></td>
+			<td><input style="height:26px;"  type="password" name="password" value="" id="password" onClick="document.getElementById('error').style.display='none';"></td>
+		</tr>
+
+		</tbody>
+		</table>
+		<input class='btn btn-info btn-large' type="submit" value="修改" />
+		<input type="hidden" name="next" value="{{ next|escape }}" />
+	</form>
+</div>
+{% endblock %}
+

@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block js %}
+<script language="JavaScript" type="text/javascript">
+      function up(e){
+	  var usern = /^[a-zA-Z0-9_]{1,}$/;
+	  var filter  = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+      if(document.getElementById('username').value=="" || document.getElementById('password').value=="" || document.getElementById('email').value=="")
+	  {
+      document.getElementById('error').style.display='block';
+	  return false;
+       }
+	   else if(!document.getElementById('username').value.match(usern) ||  !document.getElementById('email').value.match(filter))
+	  {
+      document.getElementById('error1').style.display='block';
+	  return false;
+       }
+	   
+      }
+
+</script>
+{% endblock %}
+{% block content %}
+<div style='position:absolute;left:50%;top:50%;margin:-150px 0 0 -200px;width:400px;height:200px;'>
+	{% if error == 1%}<div  class="alert alert-error">注册的用户名或者邮箱已被使用！</div>{% endif %}
+	<div style="display:none;" id='error'class="alert alert-error">对不起,请填写完整或者填写正确！</div>
+	<div style="display:none;" id='error1'class="alert alert-error">对不起，相关填写格式不正确(用户名只能使用数字、字母及下划线)</div>
+	<div class="alert alert-info"><b>帐号注册</b> </div>
+
+	<form name="myform" id="myform" class="form-inline" action='.' method="POST" onSubmit="return up(this);">
+	   {% csrf_token %} 
+		<table class="table table-condensed">
+		<!--thead>
+		<tr>
+		<th>…</th>
+		<th>…</th>
+		</tr>
+		</thead-->
+		<tbody>
+		<tr>
+			<td><label for="username">用户名: </label></td>
+			<td><input style="height:26px;" type="text" name="username" value="" id="username" onClick="document.getElementById('error').style.display='none';"></td>
+		</tr>
+		<tr>
+			<td><label for="password">密码: </label></td>
+			<td><input style="height:26px;"  type="password" name="password" value="" id="password" onClick="document.getElementById('error').style.display='none';"></td>
+		</tr>
+		<tr>
+			<td><label for="email">邮箱: </label></td>
+			<td><input style="height:26px;"  type="text" name="email" value="" id="email" onClick="document.getElementById('error').style.display='none';"></td>
+		</tr>
+		</tbody>
+		</table>
+		<input class='btn btn-info btn-large' type="submit" value="注册" />&nbsp;&nbsp;<a href='/accounts/login/'>登陆</a>
+		<input type="hidden" name="next" value="{{ next|escape }}" />
+	</form>
+</div>
+{% endblock %}
+

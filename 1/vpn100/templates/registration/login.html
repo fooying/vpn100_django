@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block js %}
+<script language="JavaScript" type="text/javascript">
+      function up(e){
+	  var usern = /^[a-zA-Z0-9_]{1,}$/;
+      if(!document.getElementById('username').value.match(usern)  )
+	  {
+      document.getElementById('error').style.display='block';
+	  return false;
+       }
+      }
+
+</script>
+{% endblock %} 
+{% block content %}
+<div style='position:absolute;left:50%;top:50%;margin:-150px 0 0 -200px;width:400px;height:200px;'>
+	{% if form.errors %}
+	<div class="alert alert-error">帐号或者密码错误！ <b>无法登陆！</b> </div>
+	{% else %}
+	<div class="alert alert-info"><b>帐号登陆</b> </div>
+	{% endif %}
+
+	<form name="myform" id="myform" class="form-inline" action='.' method="POST" onSubmit="return up(this);"> 
+	   {% csrf_token %} 
+		<table class="table table-condensed">
+		<!--thead>
+		<tr>
+		<th>…</th>
+		<th>…</th>
+		</tr>
+		</thead-->
+		<tbody>
+		<tr>
+			<td><label for="username">用户名: </label></td>
+			<td><input style="height:26px;" type="text" name="username" value="" id="username"></td>
+		</tr>
+		<tr>
+			<td><label for="password">密码: </label></td>
+			<td><input style="height:26px;"  type="password" name="password" value="" id="password"></td>
+		</tr>
+		</tbody>
+		</table>
+		<input class='btn btn-info btn-large' type="submit" value="登陆" />&nbsp;&nbsp;<a href='/accounts/reg/'>注册</a>
+		<input type="hidden" name="next" value="{{ next|escape }}" />
+	</form>
+</div>
+{% endblock %}
+

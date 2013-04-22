@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if user.is_authenticated %}
+      <h3 style="padding-top: 20px;">欢迎您,{{ user.username }}({% if leng > 0 %}付费用户{% else %}非付费用户{% endif %})</h3><hr />                           
+	   <div class="clear-block">
+
+			</p>
+			<table>
+			<tr><div class="kk"><h3><b>已付款套餐</b></h3></div></tr>
+			{% for vpn in vpns2 %}
+			<tr>
+			<td><div class="kk1">{% if vpn.days <= 5 %}<font color='red'>*</font>{% endif %}{{ vpn.vpn }}-数量:{{ vpn.num }}-购买日期：{{ vpn.created_at }}-过期日期:{{ vpn.finadate }}</div></td>
+			</tr>
+			{% endfor %}
+			</table>
+			<table>
+			<tr><div class="kk"><h3><b>未付款套餐</b></h3></div></tr>
+			{% for vpn in vpns1 %}
+			<tr>
+			<td><div class="kk1">{{ vpn.vpn }}--<a href='{{ vpn.url }}' target=_blank>付款</a></div></td>
+			</tr>
+			{% endfor %}
+			</table>
+			<hr>
+			<p><font color='red'>红色*显示为即将过期套餐,请及时续费</font></p>
+			</div>
+{% endif %}
+          {% endblock %}

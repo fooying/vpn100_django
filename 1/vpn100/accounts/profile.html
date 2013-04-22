@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  {{ user.username }}'s profile
+{% endblock %}
+
+{% block extra_head %}
+  {{ block.super }}
+{% endblock %}
+
+{% block content %}
+  <div class="page-header">
+    <h1>API Keys</h1>
+  </div>
+  <table class="table">
+    <thead>
+      <tr>
+        <td>Key</td>
+        <td>Active</td>
+        <td>Level</td>
+        <td>Request Limit</td>
+        <td>Requests Count</td>
+        <td>Current rate start</td>
+        <td>Current rate requests</td>
+      </tr>
+    </thead>
+    <tbody>
+      {% for key in keys %}
+        <tr>
+          <td>{{ key.key }}</td>
+          <td>{{ key.is_active }}</td>
+          <td>{{ key.get_level_display }}</td>
+          <td>{{ key.request_limit }}</td>
+          <td>{{ key.requests_count }}</td>
+          <td>{{ key.current_rate_start }}</td>
+          <td>{{ key.current_rate_requests }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
+
+{% block extra_content %}
+  {{ block.super }}
+{% endblock %}
